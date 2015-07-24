@@ -73,7 +73,7 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(actual_string.find(sub_string), pos);
-            Assert::AreEqual(0ULL, this->output.length());
+            Assert::IsTrue(0ULL == this->output.length());
         }
 
         #pragma endregion
@@ -136,7 +136,7 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(actual_string.find(sub_string), pos);
-            Assert::AreEqual(0ULL, this->output.length());
+            Assert::IsTrue(0ULL == this->output.length());
         }
 
         #pragma endregion
