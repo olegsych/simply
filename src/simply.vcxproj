@@ -30,13 +30,9 @@
     <ClInclude Include="simply\utility\type_name.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="simply\assert\implementation.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="simply.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="simply.props" />
     <None Include="simply.targets">
       <SubType>Designer</SubType>
     </None>
@@ -49,7 +45,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="..\common.props" />
-  <Import Project="simply.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -156,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="simply.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
