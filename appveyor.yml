@@ -21,7 +21,7 @@ test_script:
 - vstest.console bin\debug\x64\simply-tests.dll /Platform:x64 /logger:Appveyor
 
 after_test:
-- nuget pack "src\simply.nuspec" -BasePath "src\" -OutputDirectory "bin\debug"
+- nuget pack "src\simply.nuspec" -BasePath "src" -OutputDirectory "bin\debug"
 
 artifacts:
 - path: bin\debug\*.nukpg
