@@ -33,7 +33,6 @@
     <ClCompile Include="simply\assert\implementation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="simply.nuspec">
       <SubType>Designer</SubType>
     </None>
@@ -159,16 +158,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-
-  <Target Name="PrepareForNugetPackaging" AfterTargets="Build">
-    <XmlPeek XmlInputPath="$(MSBuildThisFileDirectory)\packages.config" Query="/packages/package[@id='NuGet.CommandLine']/@version">
-      <Output TaskParameter="Result" PropertyName="NuGetCommandLineVersion"/>
-    </XmlPeek>
-    <PropertyGroup>
-      <NuGetExe>..\packages\NuGet.CommandLine.$(NuGetCommandLineVersion)\tools\NuGet.exe</NuGetExe>
-      <NuSpec>simply.nuspec</NuSpec>
-    </PropertyGroup>
-    <Exec Command='"$(NuGetExe)" pack "$(NuSpec)" -OutputDirectory "$(OutDir.TrimEnd(&quot;\&quot;))"'/>
-  </Target>
-
 </Project>
