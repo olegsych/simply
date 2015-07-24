@@ -3,7 +3,7 @@
   <metadata>
     <id>simply</id>
     <version>$version$</version>
-    <title>simply:: a small C++ library.</title>
+    <title>simply:: a small C++ library</title>
     <description>simply:: is a small library that wants to help you write C++ when it grows up</description>
     <projectUrl>https://github.com/olegsych/simply</projectUrl>
     <licenseUrl>https://github.com/olegsych/simply/blob/master/LICENSE</licenseUrl>
