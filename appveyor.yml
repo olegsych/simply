@@ -1,0 +1,27 @@
+# CI build definition for https://ci.appveyor.com/project/olegsych/simply
+
+version: 0.1.0-{branch}{build}
+
+branches:
+  only:
+  - master
+
+os: Visual Studio 2015
+
+nuget:
+  disable_publish_on_pr: true
+
+build_script:
+- set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+- msbuild simply.sln /m /p:Platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+- msbuild simply.sln /m /p:Platform=x64 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
+test_script:
+- vstest.console bin\debug\Win32\simply-tests.dll /Platform:x86 /logger:Appveyor
+- vstest.console bin\debug\x64\simply-tests.dll /Platform:x64 /logger:Appveyor
+
+after_test:
+- nuget pack "src\simply.nuspec" -BasePath "src\" -OutputDirectory "bin\debug"
+
+artifacts:
+- path: bin\debug\*.nukpg
