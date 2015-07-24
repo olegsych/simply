@@ -1,6 +1,6 @@
 # CI build definition for https://ci.appveyor.com/project/olegsych/simply
 
-version: 0.1.0-{branch}{build}
+version: 0.1.0-build{build}
 
 branches:
   only:
@@ -21,7 +21,7 @@ test_script:
 - vstest.console bin\debug\x64\simply-tests.dll /Platform:x64 /logger:Appveyor
 
 after_test:
-- nuget pack "src\simply.nuspec" -BasePath "src" -OutputDirectory "bin\debug"
+- nuget pack "src\simply.nuspec" -BasePath "src" -OutputDirectory "bin\debug" -Properties "version=$(appveyor_build_version)"
 
 artifacts:
-- path: bin\debug\*.nukpg
+- path: bin\debug\*.nupkg
