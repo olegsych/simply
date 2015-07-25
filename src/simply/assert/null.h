@@ -6,6 +6,17 @@
 
 namespace simply { namespace assert
 {
+    template<typename t>
+    void not_null(const t* pointer)
+    {
+        if (pointer == nullptr)
+        {
+            std::ostringstream message;
+            message << "Expected non-null pointer of type <" << utility::type_name<t*>() << ">";
+            fail(message);
+        }
+    }
+
     inline void null(const void* pointer)
     {
         if (pointer != nullptr)
