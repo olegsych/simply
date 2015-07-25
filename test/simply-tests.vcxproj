@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assert\exception_test.cpp" />
+    <ClCompile Include="assert\null_test.cpp" />
     <ClCompile Include="assert\string_test.cpp" />
     <ClCompile Include="assert\type_traits_test.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -169,7 +170,7 @@
     <ClCompile Include="utility\type_info_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="..\src\simply.targets"/>
+  <Import Project="..\src\simply.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
