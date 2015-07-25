@@ -2,14 +2,13 @@
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace simply::utility;
 
 namespace simply
 {		
 	TEST_CLASS(fail_test)
 	{
         wstring output;
-        temporary<function<void(const wstring&)>> fail_stub { 
+        utility::temporary<function<void(const wstring&)>> fail_stub { 
             assert::implementation::fail, 
             [&](const wstring& message) { output = message; } 
         };

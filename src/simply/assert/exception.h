@@ -27,7 +27,7 @@ namespace simply { namespace assert
         }
 
         std::ostringstream message;
-        message << "Expected exception of type: <" << type_name<exception_t>() << ">";
+        message << "Expected exception of type: <" << utility::type_name<exception_t>() << ">";
 
         if (actual_exception)
         {
