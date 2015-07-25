@@ -12,7 +12,6 @@
     <tags>C++ native</tags>
   </metadata>
   <files>
-    <file src="simply.props" target="build\native\" />
     <file src="simply.targets" target="build\native\" />
     <file src="simply\**\*.h" target="build\native\simply\" />
     <file src="simply\**\*.cpp" target="build\native\simply\" />
