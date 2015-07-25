@@ -6,7 +6,7 @@ namespace simply { namespace utility
 {
     template<typename t> const std::string type_name()
     {
-        string result { typeid(t).name() };
+        std::string result { typeid(t).name() };
         
         if (std::is_const<t>::value)
         {
