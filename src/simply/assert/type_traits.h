@@ -18,6 +18,18 @@ namespace simply { namespace assert
         }
     }
 
+    template<typename base_t, typename actual_t>
+    void is_base_of()
+    {
+        if (!std::is_base_of<base_t, actual_t>::value)
+        {
+            std::ostringstream message;
+            message << "Expected type derived from <" << utility::type_name<base_t>() << ">\n";
+            message << "Actual type <" << utility::type_name<actual_t>() << "> is not";
+            fail(message);
+        }
+    }
+
     template<typename actual_t>
     void is_concrete()
     {
