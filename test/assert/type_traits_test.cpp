@@ -25,6 +25,10 @@ namespace simply
             void method() override {}
         };
 
+        class standalone_type 
+        {
+        };
+
     public:
         #pragma region is_abstract<actual_t>()
 
@@ -39,6 +43,25 @@ namespace simply
         TEST_METHOD(is_abstract_doesnt_fail_when_type_is_abstract)
         {
             assert::is_abstract<abstract_type>();
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
+        #pragma region is_base_of<base_t, derived_t>()
+
+        TEST_METHOD(is_base_of_fails_when_actual_type_is_not_derived_from_base)
+        {
+            assert::is_base_of<abstract_type, standalone_type>();
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"abstract_type"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"standalone_type"));
+        }
+
+        TEST_METHOD(is_base_of_doesnt_fail_when_actual_type_is_derived_from_base)
+        {
+            assert::is_base_of<abstract_type, concrete_type>();
 
             Assert::AreEqual<size_t>(0, this->output.length());
         }
@@ -63,7 +86,6 @@ namespace simply
         }
 
         #pragma endregion
-
 
         #pragma region is_same<expected_t, actual_t>()
         
