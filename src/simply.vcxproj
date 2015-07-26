@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="simply\assert.h" />
+    <ClInclude Include="simply\assert\bool.h" />
     <ClInclude Include="simply\assert\exception.h" />
     <ClInclude Include="simply\assert\fail.h" />
     <ClInclude Include="simply\assert\implementation.h" />

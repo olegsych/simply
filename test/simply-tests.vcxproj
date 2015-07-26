@@ -158,6 +158,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="assert\bool_test.cpp" />
     <ClCompile Include="assert\exception_test.cpp" />
     <ClCompile Include="assert\null_test.cpp" />
     <ClCompile Include="assert\string_test.cpp" />
