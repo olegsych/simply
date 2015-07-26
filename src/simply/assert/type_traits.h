@@ -18,6 +18,18 @@ namespace simply { namespace assert
         }
     }
 
+    template<typename actual_t>
+    void is_concrete()
+    {
+        if (std::is_abstract<actual_t>::value)
+        {
+            std::ostringstream message;
+            message << "Expected concrete type\n";
+            message << "Actual abstract type: <" << utility::type_name<actual_t>() << ">";
+            fail(message);
+        }
+    }
+
     template<typename expected_t, typename actual_t>
     void is_same()
     {      

@@ -45,6 +45,26 @@ namespace simply
 
         #pragma endregion
 
+        #pragma region is_concrete<actual_t>()
+
+        TEST_METHOD(is_concrete_fails_when_type_is_abstract)
+        {
+            assert::is_concrete<abstract_type>();
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"concrete"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"abstract_type"));
+        }
+
+        TEST_METHOD(is_concrete_doesnt_fail_when_type_is_concrete)
+        {
+            assert::is_concrete<concrete_type>();
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
+
         #pragma region is_same<expected_t, actual_t>()
         
         TEST_METHOD(is_same_fails_when_types_are_different)
