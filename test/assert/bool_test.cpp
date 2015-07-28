@@ -33,6 +33,29 @@ namespace simply
 
         #pragma endregion
 
+        #pragma region is_true(int)
+
+        TEST_METHOD(is_true_fails_when_given_value_is_FALSE)
+        {
+            int actual = 0;
+
+            assert::is_true(actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"TRUE(!0)"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"FALSE(0)"));
+        }
+
+        TEST_METHOD(is_true_doesnt_fail_when_given_value_is_TRUE)
+        {
+            int actual = 1;
+
+            assert::is_true(actual);
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
         #pragma region is_false(bool)
 
         TEST_METHOD(is_false_fails_when_given_value_is_true)
@@ -46,6 +69,29 @@ namespace simply
         TEST_METHOD(is_false_doesnt_fail_when_given_value_is_false)
         {
             assert::is_false(false);
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
+        #pragma region is_false(int)
+
+        TEST_METHOD(is_false_fails_when_given_value_is_TRUE)
+        {
+            int actual = 42;
+
+            assert::is_false(actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"FALSE(0)"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"TRUE(42)"));
+        }
+
+        TEST_METHOD(is_false_doesnt_fail_when_given_value_is_FALSE)
+        {
+            int actual = 0;
+
+            assert::is_false(actual);
 
             Assert::AreEqual<size_t>(0, this->output.length());
         }
