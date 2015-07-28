@@ -7,7 +7,7 @@
 namespace simply { namespace assert
 {
     template<typename t>
-    void not_null(const t* pointer)
+    void is_not_null(const t* pointer)
     {
         if (pointer == nullptr)
         {
@@ -17,7 +17,7 @@ namespace simply { namespace assert
         }
     }
 
-    inline void null(const void* pointer)
+    inline void is_null(const void* pointer)
     {
         if (pointer != nullptr)
         {
@@ -29,7 +29,7 @@ namespace simply { namespace assert
     }
 
     template<typename t>
-    void null(const t* pointer)
+    void is_null(const t* pointer)
     {
         if (pointer != nullptr)
         {
