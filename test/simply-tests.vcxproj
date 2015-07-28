@@ -168,7 +168,7 @@
     </ClCompile>
     <ClCompile Include="assert\fail_test.cpp" />
     <ClCompile Include="utility\temporary_test.cpp" />
-    <ClCompile Include="utility\type_info_test.cpp" />
+    <ClCompile Include="utility\type_name_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="..\src\simply.targets" />
