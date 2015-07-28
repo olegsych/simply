@@ -9,7 +9,7 @@ namespace simply { namespace assert
     template<typename actual_t>
     void is_abstract()
     {
-        if (!std::is_abstract<actual_t>::value)
+        if (!std::is_abstract<actual_t>())
         {
             std::ostringstream message;
             message << "Expected abstract type\n";
@@ -21,7 +21,7 @@ namespace simply { namespace assert
     template<typename base_t, typename actual_t>
     void is_base_of()
     {
-        if (!std::is_base_of<base_t, actual_t>::value)
+        if (!std::is_base_of<base_t, actual_t>())
         {
             std::ostringstream message;
             message << "Expected type derived from <" << utility::type_name<base_t>() << ">\n";
@@ -33,7 +33,7 @@ namespace simply { namespace assert
     template<typename actual_t>
     void is_concrete()
     {
-        if (std::is_abstract<actual_t>::value)
+        if (std::is_abstract<actual_t>())
         {
             std::ostringstream message;
             message << "Expected concrete type\n";
@@ -45,7 +45,7 @@ namespace simply { namespace assert
     template<typename expected_t, typename actual_t>
     void is_same()
     {      
-        if (!std::is_same<expected_t, actual_t>::value)
+        if (!std::is_same<expected_t, actual_t>())
         {
             std::ostringstream message;
             message << "Expected type: <" << utility::type_name<expected_t>() << ">\n";
