@@ -24,8 +24,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(string::npos, pos);
-            Assert::AreNotEqual(string::npos, this->output.find(L"expected"));
-            Assert::AreNotEqual(string::npos, this->output.find(L"actual"));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_fails_when_expected_cstyle_string_is_not_found_in_actual_string)
@@ -36,8 +36,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(string::npos, pos);
-            Assert::AreNotEqual(string::npos, this->output.find(L"expected"));
-            Assert::AreNotEqual(string::npos, this->output.find(L"actual"));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_fails_when_expected_string_is_not_found_in_actual_cstyle_string)
@@ -48,8 +48,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(string::npos, pos);
-            Assert::AreNotEqual(string::npos, this->output.find(L"expected"));
-            Assert::AreNotEqual(string::npos, this->output.find(L"actual"));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_fails_when_expected_cstyle_string_is_not_found_in_actual_cstyle_string)
@@ -60,8 +60,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(string::npos, pos);
-            Assert::AreNotEqual(string::npos, this->output.find(L"expected"));
-            Assert::AreNotEqual(string::npos, this->output.find(L"actual"));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(string::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_returns_position_of_expected_string_found_in_actual_string)
@@ -87,8 +87,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(wstring::npos, pos);
-            Assert::AreNotEqual(wstring::npos, this->output.find(sub_string));
-            Assert::AreNotEqual(wstring::npos, this->output.find(actual_string));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_fails_when_expected_cstyle_wstring_is_not_found_in_actual_wstring)
@@ -99,8 +99,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(wstring::npos, pos);
-            Assert::AreNotEqual(wstring::npos, this->output.find(L"expected"));
-            Assert::AreNotEqual(wstring::npos, this->output.find(L"actual"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_fails_when_expected_wstring_is_not_found_in_actual_cstyle_wstring)
@@ -111,8 +111,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(wstring::npos, pos);
-            Assert::AreNotEqual(wstring::npos, this->output.find(L"expected"));
-            Assert::AreNotEqual(wstring::npos, this->output.find(L"actual"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_fails_when_expected_cstyle_wstring_is_not_found_in_actual_cstyle_wstring)
@@ -123,8 +123,8 @@ namespace simply
             size_t pos = assert::find(sub_string, actual_string);
 
             Assert::AreEqual(wstring::npos, pos);
-            Assert::AreNotEqual(string::npos, this->output.find(L"expected"));
-            Assert::AreNotEqual(string::npos, this->output.find(L"actual"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"expected\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"actual\""));
         }
 
         TEST_METHOD(find_doesnt_fail_when_expected_wstring_is_found_in_actual_wstring)
@@ -136,6 +136,118 @@ namespace simply
 
             Assert::AreEqual(actual_string.find(sub_string), pos);
             Assert::IsTrue(0ULL == this->output.length());
+        }
+
+        #pragma endregion
+
+        #pragma region is_equal
+
+        TEST_METHOD(is_equal_fails_when_actual_string_is_different_than_expected_string)
+        {
+            const wstring& expected { L"expected string" };
+            const wstring& actual { L"actual string" };
+
+            assert::is_equal(expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + expected + L"\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + actual + L"\""));
+        }
+
+        TEST_METHOD(is_equal_fails_when_actual_string_is_different_than_expected_cstyle_string)
+        {
+            const wchar_t* expected { L"expected string" };
+            const wstring& actual { L"actual string" };
+
+            assert::is_equal(expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + wstring { expected } +L"\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + actual + L"\""));
+        }
+
+        TEST_METHOD(is_equal_fails_when_actual_cstyle_string_is_different_than_expected_string)
+        {
+            const wstring& expected { L"expected string" };
+            const wchar_t* actual { L"actual string" };
+
+            assert::is_equal(expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + expected + L"\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + wstring { actual } + L"\""));
+        }
+
+        TEST_METHOD(is_equal_fails_when_actual_cstyle_string_is_different_than_expected_cstyle_string)
+        {
+            const wchar_t* expected { L"expected string" };
+            const wchar_t* actual { L"actual string" };
+
+            assert::is_equal(expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + wstring { expected } + L"\""));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + wstring { actual } +L"\""));
+        }
+
+        TEST_METHOD(is_equal_doesnt_fail_when_actual_string_is_equal_to_expected)
+        {
+            const wstring& expected { L"expected string" };
+            const wstring& actual { L"expected string" };
+
+            assert::is_equal(expected, actual);
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
+        #pragma region is_not_equal
+
+        TEST_METHOD(is_not_equal_fails_when_actual_string_is_equal_to_expected_string)
+        {
+            const wstring& not_expected { L"not expected string" };
+            const wstring& actual { L"not expected string" };
+
+            assert::is_not_equal(not_expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + not_expected + L"\""));
+        }
+
+        TEST_METHOD(is_not_equal_fails_when_actual_string_is_equal_to_expected_cstyle_string)
+        {
+            const wchar_t* not_expected { L"not expected string" };
+            const wstring& actual { L"not expected string" };
+
+            assert::is_not_equal(not_expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + wstring { not_expected } + L"\""));
+        }
+
+        TEST_METHOD(is_not_equal_fails_when_actual_cstyle_string_is_equal_to_expected_string)
+        {
+            const wstring& not_expected { L"not expected string" };
+            const wchar_t* actual { L"not expected string" };
+
+            assert::is_not_equal(not_expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + not_expected + L"\""));
+        }
+
+        TEST_METHOD(is_not_equal_fails_when_actual_cstyle_string_is_equal_to_expected_cstyle_string)
+        {
+            const wchar_t* not_expected { L"not expected string" };
+            const wchar_t* actual { L"not expected string" };
+
+            assert::is_not_equal(not_expected, actual);
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"\"" + wstring { not_expected } + L"\""));
+        }
+
+        TEST_METHOD(is_not_equal_doesnt_fail_when_actual_string_is_equal_to_expected)
+        {
+            const wstring& not_expected { L"not expected string" };
+            const wstring& actual { L"actual string" };
+
+            assert::is_not_equal(not_expected, actual);
+
+            Assert::AreEqual<size_t>(0, this->output.length());
         }
 
         #pragma endregion
