@@ -17,11 +17,15 @@ build_script:
 - msbuild simply.sln /m /p:Platform=x64 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 test_script:
-- vstest.console bin\debug\Win32\simply-tests.dll /Platform:x86 /logger:Appveyor
-- vstest.console bin\debug\x64\simply-tests.dll /Platform:x64 /logger:Appveyor /inIsolation
+- vstest.console bin\debug\Win32\simply.assert.tests.dll /Platform:x86 /logger:Appveyor
+- vstest.console bin\debug\x64\simply.assert.tests.dll /Platform:x64 /logger:Appveyor /inIsolation
+- vstest.console bin\debug\Win32\simply.utility.tests.dll /Platform:x86 /logger:Appveyor
+- vstest.console bin\debug\x64\simply.utility.tests.dll /Platform:x64 /logger:Appveyor /inIsolation
 
 after_test:
 - nuget pack "src\simply.nuspec" -BasePath "src" -OutputDirectory "bin\debug" -Properties "version=%appveyor_build_version%"
+- nuget pack "src\assert\simply.assert.nuspec" -BasePath "src\assert" -OutputDirectory "bin\debug" -Properties "version=%appveyor_build_version%"
+- nuget pack "src\utility\simply.utility.nuspec" -BasePath "src\utility" -OutputDirectory "bin\debug" -Properties "version=%appveyor_build_version%"
 
 artifacts:
 - path: bin\debug\*.nupkg

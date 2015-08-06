@@ -11,12 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8BF2A291-999D-452C-A1D2-B9B37A023040}"
+	ProjectSection(SolutionItems) = preProject
+		src\simply.nuspec = src\simply.nuspec
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2C5A8094-D989-457C-939B-8FD9B25CE147}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simply", "src\simply.vcxproj", "{B8308EAB-0D4C-46DA-9361-D7E977AC3D76}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simply.assert", "src\assert\simply.assert.vcxproj", "{B8308EAB-0D4C-46DA-9361-D7E977AC3D76}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simply-tests", "test\simply-tests.vcxproj", "{D89080AA-0131-4C36-B3C5-4E2A89B2C72C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simply.assert.tests", "test\assert\simply.assert.tests.vcxproj", "{D89080AA-0131-4C36-B3C5-4E2A89B2C72C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simply.utility", "src\utility\simply.utility.vcxproj", "{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simply.utility.tests", "test\utility\simply.utility.tests.vcxproj", "{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +49,22 @@ Global
 		{D89080AA-0131-4C36-B3C5-4E2A89B2C72C}.Release|x64.Build.0 = Release|x64
 		{D89080AA-0131-4C36-B3C5-4E2A89B2C72C}.Release|x86.ActiveCfg = Release|Win32
 		{D89080AA-0131-4C36-B3C5-4E2A89B2C72C}.Release|x86.Build.0 = Release|Win32
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Debug|x64.ActiveCfg = Debug|x64
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Debug|x64.Build.0 = Debug|x64
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Debug|x86.ActiveCfg = Debug|Win32
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Debug|x86.Build.0 = Debug|Win32
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Release|x64.ActiveCfg = Release|x64
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Release|x64.Build.0 = Release|x64
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Release|x86.ActiveCfg = Release|Win32
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2}.Release|x86.Build.0 = Release|Win32
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Debug|x64.ActiveCfg = Debug|x64
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Debug|x64.Build.0 = Debug|x64
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Debug|x86.ActiveCfg = Debug|Win32
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Debug|x86.Build.0 = Debug|Win32
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Release|x64.ActiveCfg = Release|x64
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Release|x64.Build.0 = Release|x64
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Release|x86.ActiveCfg = Release|Win32
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,5 +72,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B8308EAB-0D4C-46DA-9361-D7E977AC3D76} = {8BF2A291-999D-452C-A1D2-B9B37A023040}
 		{D89080AA-0131-4C36-B3C5-4E2A89B2C72C} = {2C5A8094-D989-457C-939B-8FD9B25CE147}
+		{67D670E0-C06E-4AD2-8CCC-2DCC962140E2} = {8BF2A291-999D-452C-A1D2-B9B37A023040}
+		{8028247B-1DD8-4E6D-A2CE-8CF986A2D7BC} = {2C5A8094-D989-457C-939B-8FD9B25CE147}
 	EndGlobalSection
 EndGlobal

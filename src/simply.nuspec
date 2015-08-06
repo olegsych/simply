@@ -1,20 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
     <id>simply</id>
     <version>$version$</version>
-    <title>simply:: a small C++ library</title>
-    <description>simply:: is a small library that wants to help you write C++ when it grows up</description>
+    <title>simply:: small C++ libraries</title>
+    <description>simply:: is a collection of small libraries that want to help you write C++ when they grow up</description>
     <projectUrl>https://github.com/olegsych/simply</projectUrl>
     <licenseUrl>https://github.com/olegsych/simply/blob/master/LICENSE</licenseUrl>
     <authors>Oleg Sych</authors>
     <copyright>© 2015 Oleg Sych</copyright>
     <tags>C++ native</tags>
+    <dependencies>
+      <dependency id="simply.assert" version="$version$" />
+      <dependency id="simply.utility" version="$version$" />
+    </dependencies>    
   </metadata>
-  <files>
-    <file src="simply.targets" target="build\native\" />
-    <file src="simply\**\*.h" target="build\native\simply\" />
-    <file src="simply\**\*.cpp" target="build\native\simply\" />
-  </files>
 </package>
 
