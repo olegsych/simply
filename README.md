@@ -25,6 +25,8 @@ Using Visual Studio 2015:
 
 Using Developer Command Prompt for VS2015:
 ```
-vstest.console bin\debug\Win32\simply-tests.dll /Platform:x86
-vstest.console bin\debug\x64\simply-tests.dll /Platform:x64
+vstest.console bin\debug\Win32\simply.assert.tests.dll /Platform:x86
+vstest.console bin\debug\x64\simply.assert.tests.dll /Platform:x64
+vstest.console bin\debug\Win32\simply.utility.tests.dll /Platform:x86
+vstest.console bin\debug\x64\simply.utility.tests.dll /Platform:x64
 ```
