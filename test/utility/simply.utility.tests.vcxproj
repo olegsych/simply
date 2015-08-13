@@ -158,6 +158,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="range_test.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -165,6 +166,7 @@
     <ClCompile Include="type_name_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="..\..\src\assert\simply.assert.targets" />
   <Import Project="..\..\src\utility\simply.utility.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
