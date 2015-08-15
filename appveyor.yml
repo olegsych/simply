@@ -19,12 +19,15 @@ build_script:
 test_script:
 - vstest.console bin\debug\Win32\simply.assert.tests.dll /Platform:x86 /logger:Appveyor
 - vstest.console bin\debug\x64\simply.assert.tests.dll /Platform:x64 /logger:Appveyor /inIsolation
+- vstest.console bin\debug\Win32\simply.com.tests.dll /Platform:x86 /logger:Appveyor
+- vstest.console bin\debug\x64\simply.com.tests.dll /Platform:x64 /logger:Appveyor /inIsolation
 - vstest.console bin\debug\Win32\simply.utility.tests.dll /Platform:x86 /logger:Appveyor
 - vstest.console bin\debug\x64\simply.utility.tests.dll /Platform:x64 /logger:Appveyor /inIsolation
 
 after_test:
 - nuget pack "src\simply.nuspec" -BasePath "src" -OutputDirectory "bin\debug" -Properties "version=%appveyor_build_version%"
 - nuget pack "src\assert\simply.assert.nuspec" -BasePath "src\assert" -OutputDirectory "bin\debug" -Properties "version=%appveyor_build_version%"
+- nuget pack "src\com\simply.com.nuspec" -BasePath "src\com" -OutputDirectory "bin\debug" -Properties "version=%appveyor_build_version%"
 - nuget pack "src\utility\simply.utility.nuspec" -BasePath "src\utility" -OutputDirectory "bin\debug" -Properties "version=%appveyor_build_version%"
 
 artifacts:

@@ -12,6 +12,7 @@
     <tags>C++ native</tags>
     <dependencies>
       <dependency id="simply.assert" version="$version$" />
+      <dependency id="simply.com" version="$version$" />
       <dependency id="simply.utility" version="$version$" />
     </dependencies>    
   </metadata>

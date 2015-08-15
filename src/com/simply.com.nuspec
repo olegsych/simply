@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package>
+  <metadata>
+    <id>simply.com</id>
+    <version>$version$</version>
+    <title>simply::com C++ library</title>
+    <description>simply::com is a small C++ library that wants to help you write COM code when it grows up</description>
+    <projectUrl>https://github.com/olegsych/simply</projectUrl>
+    <licenseUrl>https://github.com/olegsych/simply/blob/master/LICENSE</licenseUrl>
+    <authors>Oleg Sych</authors>
+    <copyright>© 2015 Oleg Sych</copyright>
+    <tags>C++ native</tags>
+  </metadata>
+  <files>
+    <file src="*.targets" target="build\native\" />
+    <file src="simply\**\*.h" target="build\native\simply\" />
+    <file src="simply\**\*.cpp" target="build\native\simply\" />
+  </files>
+</package>
+
