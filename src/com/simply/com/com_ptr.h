@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <Unknwn.h>
 
 namespace simply { namespace com 
@@ -15,7 +16,7 @@ namespace simply { namespace com
         {
             if (!object)
             {
-                throw invalid_argument { "object must not be a nullptr." };
+                throw std::invalid_argument { "object must not be a nullptr." };
             }
 
             object->AddRef();
@@ -59,7 +60,7 @@ namespace simply { namespace com
         {
             if (!object)
             {
-                throw logic_error { "a nullptr cannot be dereferenced." };
+                throw std::logic_error { "a nullptr cannot be dereferenced." };
             }
 
             return object;
