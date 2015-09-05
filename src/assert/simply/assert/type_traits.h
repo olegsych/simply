@@ -6,8 +6,7 @@
 
 namespace simply { namespace assert
 {
-    template<typename actual_t>
-    void is_abstract()
+    template<typename actual_t> void is_abstract()
     {
         if (!std::is_abstract<actual_t>())
         {
@@ -18,8 +17,7 @@ namespace simply { namespace assert
         }
     }
 
-    template<typename base_t, typename actual_t>
-    void is_base_of()
+    template<typename base_t, typename actual_t> void is_base_of()
     {
         if (!std::is_base_of<base_t, actual_t>())
         {
@@ -30,8 +28,7 @@ namespace simply { namespace assert
         }
     }
 
-    template<typename actual_t>
-    void is_concrete()
+    template<typename actual_t> void is_concrete()
     {
         if (std::is_abstract<actual_t>())
         {
@@ -53,8 +50,7 @@ namespace simply { namespace assert
         }
     }
 
-    template<typename expected_t, typename actual_t>
-    void is_same()
+    template<typename expected_t, typename actual_t> void is_same()
     {      
         if (!std::is_same<expected_t, actual_t>())
         {
