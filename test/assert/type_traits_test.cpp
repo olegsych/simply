@@ -25,6 +25,12 @@ namespace simply
             void method() override {}
         };
 
+        class non_copy_constructible_type
+        {
+        public:
+            non_copy_constructible_type(non_copy_constructible_type&) = delete;
+        };
+
         class standalone_type 
         {
         };
@@ -81,6 +87,25 @@ namespace simply
         TEST_METHOD(is_concrete_doesnt_fail_when_type_is_concrete)
         {
             assert::is_concrete<concrete_type>();
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
+        #pragma region is_copy_constructible<actual_t>()
+
+        TEST_METHOD(is_copy_constructible_fails_when_type_is_not_copy_constructible)
+        {
+            assert::is_copy_constructible<non_copy_constructible_type>();
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"copy-constructible"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"non_copy_constructible_type"));
+        }
+
+        TEST_METHOD(is_copy_constructible_doesnt_fail_when_type_is_copy_constructible)
+        {
+            assert::is_copy_constructible<int>();
 
             Assert::AreEqual<size_t>(0, this->output.length());
         }

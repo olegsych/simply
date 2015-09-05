@@ -42,6 +42,17 @@ namespace simply { namespace assert
         }
     }
 
+    template<typename actual_t> void is_copy_constructible()
+    {
+        if (!std::is_copy_constructible<actual_t>())
+        {
+            std::ostringstream message;
+            message << "Expected copy-constructible type\n";
+            message << "Actual type: <" << utility::type_name<actual_t>() << "> is not";
+            fail(message);
+        }
+    }
+
     template<typename expected_t, typename actual_t>
     void is_same()
     {      
