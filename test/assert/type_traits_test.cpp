@@ -31,6 +31,12 @@ namespace simply
             non_copy_constructible_type(non_copy_constructible_type&) = delete;
         };
 
+        class non_copy_assignable_type
+        {
+        public:
+            non_copy_assignable_type& operator=(non_copy_assignable_type&&) = delete;
+        };
+
         class standalone_type 
         {
         };
@@ -87,6 +93,25 @@ namespace simply
         TEST_METHOD(is_concrete_doesnt_fail_when_type_is_concrete)
         {
             assert::is_concrete<concrete_type>();
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
+        #pragma region is_copy_assignable<actual_t>()
+
+        TEST_METHOD(is_copy_assignable_fails_when_type_is_not_copy_assignable)
+        {
+            assert::is_copy_assignable<non_copy_assignable_type>();
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"copy-assignable"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"non_copy_assignable_type"));
+        }
+
+        TEST_METHOD(is_copy_assignable_doesnt_fail_when_type_is_copy_assignable)
+        {
+            assert::is_copy_assignable<int>();
 
             Assert::AreEqual<size_t>(0, this->output.length());
         }
