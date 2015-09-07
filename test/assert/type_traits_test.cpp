@@ -37,6 +37,12 @@ namespace simply
             non_copy_assignable_type& operator=(non_copy_assignable_type&&) = delete;
         };
 
+        class non_destructible_type
+        {
+        public:
+            ~non_destructible_type() = delete;
+        };
+
         class standalone_type 
         {
         };
@@ -129,6 +135,25 @@ namespace simply
         }
 
         TEST_METHOD(is_copy_constructible_doesnt_fail_when_type_is_copy_constructible)
+        {
+            assert::is_copy_constructible<int>();
+
+            Assert::AreEqual<size_t>(0, this->output.length());
+        }
+
+        #pragma endregion
+
+        #pragma region is_destructible<actual_t>()
+
+        TEST_METHOD(is_destructible_fails_when_type_is_not_destructible)
+        {
+            assert::is_destructible<non_destructible_type>();
+
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"destructible"));
+            Assert::AreNotEqual(wstring::npos, this->output.find(L"non_destructible_type"));
+        }
+
+        TEST_METHOD(is_destructible_doesnt_fail_when_type_is_destructible)
         {
             assert::is_copy_constructible<int>();
 

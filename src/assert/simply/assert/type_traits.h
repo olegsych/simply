@@ -61,6 +61,17 @@ namespace simply { namespace assert
         }
     }
 
+    template<typename actual_t> void is_destructible()
+    {
+        if (!std::is_destructible<actual_t>())
+        {
+            std::ostringstream message;
+            message << "Expected destructible type\n";
+            message << "Actual type: <" << utility::type_name<actual_t>() << "> is not";
+            fail(message);
+        }
+    }
+
     template<typename expected_t, typename actual_t> void is_same()
     {      
         if (!std::is_same<expected_t, actual_t>())
