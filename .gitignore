@@ -7,7 +7,7 @@
 /packages
 /bin
 /obj
+/TestResults
 
 # Ignore C++ filters because they make projects more complex
 *.filters
-
