@@ -139,6 +139,8 @@
     <ClInclude Include="simply\utility.h" />
     <ClInclude Include="simply\utility\enumerable.h" />
     <ClInclude Include="simply\utility\enumerator.h" />
+    <ClInclude Include="simply\utility\iterator.h" />
+    <ClInclude Include="simply\utility\iterator_position.h" />
     <ClInclude Include="simply\utility\range.h" />
     <ClInclude Include="simply\utility\temporary.h" />
     <ClInclude Include="simply\utility\type_name.h" />
