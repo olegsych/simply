@@ -10,10 +10,36 @@ namespace simply { namespace utility
 {
 	TEST_CLASS(iterator_test)
 	{
+		class tracker
+		{
+		public:
+			tracker() { ++construction_count; }
+			~tracker() { ++destruction_count; }
+			static int construction_count;
+			static int destruction_count;
+		};
+
 		template<typename element_t> shared_ptr<enumerable<element_t>> create_enumerable(initializer_list<element_t> elements)
 		{
 			auto enumerable_stub = new stub_enumerable<element_t>(elements);
 			return shared_ptr<enumerable<element_t>> { enumerable_stub };
+		}
+
+		template<typename element_t> shared_ptr<enumerable<element_t>> create_enumerable()
+		{
+			auto e = new stub_enumerable<element_t>();
+			e->stub_create_enumerator = []()
+			{
+				auto e = new stub_enumerator<element_t>();
+				e->stub_get_next = [](element_t* element)
+				{
+					new(element) element_t;
+					return true;
+				};
+				return unique_ptr<enumerator<element_t>> { e };
+			};
+
+			return shared_ptr<enumerable<element_t>> { e };
 		}
 
 	public:
@@ -47,6 +73,13 @@ namespace simply { namespace utility
 			assert::is_true(expected_value == sut.position()); // TODO: define << for position enum
 		}
 
+		TEST_METHOD(constructor_doesnt_construct_current_element)
+		{
+			tracker::construction_count = 0;
+			iterator<tracker> sut { create_enumerable<tracker>({}), iterator_position::before_first };
+			assert::is_equal(0, tracker::construction_count);
+		}
+
 		#pragma endregion
 
 		#pragma region iterator(const iterator&)
@@ -71,6 +104,29 @@ namespace simply { namespace utility
 			iterator<int> source { create_enumerable<int>({ 42 }), iterator_position::before_first };
 			iterator<int> sut { source };
 			assert::is_equal(*source, *sut);
+		}
+
+		#pragma endregion
+
+		#pragma region ~iterator()
+		
+		TEST_METHOD(destructor_destroys_previouly_created_current_element)
+		{
+			{
+				iterator<tracker> sut { create_enumerable<tracker>(), iterator_position::before_first };
+				++sut;
+				tracker::destruction_count = 0;
+			}
+			assert::is_equal(1, tracker::destruction_count);
+		}
+
+		TEST_METHOD(destructor_doesnt_destroy_current_element_if_it_wasnt_constructed)
+		{
+			{
+				iterator<tracker> sut { create_enumerable<tracker>(), iterator_position::before_first };
+				tracker::destruction_count = 0;
+			}
+			assert::is_equal(0, tracker::destruction_count);
 		}
 
 		#pragma endregion
@@ -102,6 +158,27 @@ namespace simply { namespace utility
 			iterator<int> target { create_enumerable<int>({}), iterator_position::before_first };;
 			target = source;
 			assert::is_equal(expected, *target);
+		}
+
+		TEST_METHOD(copy_assignment_operator_destroys_previouly_created_current_element)
+		{
+			iterator<tracker> sut { create_enumerable<tracker>(), iterator_position::before_first };
+			++sut;
+
+			tracker::destruction_count = 0;
+			sut = iterator<tracker> { create_enumerable<tracker>(), iterator_position::before_first };
+			
+			assert::is_equal(1, tracker::destruction_count);
+		}
+
+		TEST_METHOD(copy_assignment_operator_doesnt_destroy_current_element_if_it_wasnt_constructed)
+		{
+			iterator<tracker> sut { create_enumerable<tracker>(), iterator_position::before_first };
+
+			tracker::destruction_count = 0;
+			sut = iterator<tracker> { create_enumerable<tracker>(), iterator_position::before_first };
+
+			assert::is_equal(0, tracker::destruction_count);
 		}
 
 		TEST_METHOD(copy_assignment_operator_returns_reference_to_itself)
@@ -221,6 +298,14 @@ namespace simply { namespace utility
 			assert::is_equal(42, *sut);
 		}
 
+		TEST_METHOD(increment_operator_destroys_previouly_created_current_element)
+		{
+			iterator<tracker> sut { create_enumerable<tracker>(), iterator_position::before_first };
+			tracker::destruction_count = 0;
+			++sut; // 2 * get_next 
+			assert::is_equal(1, tracker::destruction_count);
+		}
+
 		#pragma endregion
 
 		#pragma region iterator::operator==() and iterator::operator!=()
@@ -289,4 +374,7 @@ namespace simply { namespace utility
 
 		#pragma endregion
 	};
+
+	int iterator_test::tracker::construction_count;
+	int iterator_test::tracker::destruction_count;
 }}

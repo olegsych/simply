@@ -29,6 +29,11 @@ namespace simply { namespace utility
 		{
 		}
 
+		~iterator()
+		{
+			destroy_current();
+		}
+
 		iterator_position position() const
 		{
 			return _position;
@@ -41,6 +46,7 @@ namespace simply { namespace utility
 				throw std::invalid_argument { "position must not be in_range" };
 			}
 
+			destroy_current();
 			_position = source._position;
 			_enumerable = source._enumerable;
 			return *this;
@@ -105,10 +111,21 @@ namespace simply { namespace utility
 		iterator_position _position;
 		std::shared_ptr<enumerable<element_t>> _enumerable;
 		std::unique_ptr<enumerator<element_t>> _enumerator;
-		element_t _current;
+		#pragma warning (disable: 4624) // union destructor is deleted
+		union { element_t _current; };
+		#pragma warning (default: 4624)
+
+		void destroy_current()
+		{
+			if (_position == iterator_position::in_range)
+			{
+				_current.~element_t();
+			}
+		}
 
 		void get_next()
 		{
+			destroy_current();
 			if (_enumerator->get_next(&_current))
 			{
 				_position = iterator_position::in_range;
