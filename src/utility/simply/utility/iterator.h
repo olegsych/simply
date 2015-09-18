@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iterator>
 #include <stdexcept>
 #include <simply/utility/enumerable.h>
 #include <simply/utility/iterator_position.h>
@@ -9,6 +10,14 @@ namespace simply { namespace utility
 	template<typename element_t> class iterator
 	{
 	public:
+		using value_type = element_t;
+		using reference = element_t&;
+		using iterator_category = std::input_iterator_tag;
+
+		// Definitions not valid for this type but expected by iterator_traits<T>
+		using difference_type = void; 
+		using pointer = void;
+
 		iterator(std::shared_ptr<enumerable<element_t>> enumerable, iterator_position position)
 			: _enumerable { enumerable }
 			, _position { position }

@@ -51,6 +51,14 @@ namespace simply { namespace utility
 			assert::is_destructible<actual>();
 		}
 
+		TEST_METHOD(iterator_defines_traits_for_standard_algorithms)
+		{
+			using actual = iterator_traits<iterator<tracker>>;
+			assert::is_same<tracker, actual::value_type>();
+			assert::is_same<tracker&, actual::reference>();
+			assert::is_same<input_iterator_tag, actual::iterator_category>();
+		}
+
 		#pragma region iterator(shared_ptr<enumerable<element_t>>, position)
 
 		TEST_METHOD(constructor_throws_invalid_argument_when_enumerable_is_null)
