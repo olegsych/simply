@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <memory>
-#include <vector>
+#include <algorithm>
 #include "stub_enumerable.h"
 #include "stub_enumerator.h"
 
@@ -59,6 +59,15 @@ namespace simply { namespace utility
 			assert::is_same<input_iterator_tag, actual::iterator_category>();
 		}
 
+		TEST_METHOD(iterator_supports_standard_equal_algorithm)
+		{
+			initializer_list<int> expected { 40, 41, 42 };
+			shared_ptr<enumerable<int>> enumerable { create_enumerable(expected) };
+			iterator<int> begin { enumerable, iterator_position::before_first };
+			iterator<int> end { enumerable, iterator_position::after_last };
+			assert::is_true(equal(begin, end, expected.begin()));
+		}
+
 		#pragma region iterator(shared_ptr<enumerable<element_t>>, position)
 
 		TEST_METHOD(constructor_throws_invalid_argument_when_enumerable_is_null)
@@ -92,26 +101,37 @@ namespace simply { namespace utility
 
 		#pragma region iterator(const iterator&)
 
-		TEST_METHOD(copy_constructor_throws_invalid_argument_when_source_position_is_in_range)
-		{
-			iterator<int> source { create_enumerable<int>({ 41, 42 }), iterator_position::before_first };
-			++source;
-			auto e = assert::throws<invalid_argument>([&] { iterator<int> { source }; });
-			assert::find("position must not be in_range", e->what());
-		}
-
-		TEST_METHOD(copy_constructor_sets_position_to_value_from_source)
+		TEST_METHOD(copy_constructor_copies_position_from_source)
 		{
 			iterator<int> source { create_enumerable<int>({}), iterator_position::after_last };
 			iterator<int> sut { source };
 			assert::is_true(source.position() == sut.position()); // TODO: define << for position
 		}
 
-		TEST_METHOD(copy_constructor_initializes_iterator_with_enumerable_from_source)
+		TEST_METHOD(copy_constructor_copies_enumerable_from_source)
 		{
 			iterator<int> source { create_enumerable<int>({ 42 }), iterator_position::before_first };
 			iterator<int> sut { source };
 			assert::is_equal(*source, *sut);
+		}
+
+		TEST_METHOD(copy_constructor_copies_current_element_from_source)
+		{
+			const int expected = 42;
+			iterator<int> source { create_enumerable<int>({ expected - 1, expected }), iterator_position::before_first };
+			++source;
+			iterator<int> sut { source };
+			assert::is_equal(expected, *sut);
+		}
+
+		TEST_METHOD(copy_constructor_copies_enumerator_from_source)
+		{
+			const int expected = 42;
+			iterator<int> source { create_enumerable<int>({ expected - 1, expected }), iterator_position::before_first };
+			*source;
+			iterator<int> sut { source };
+			++sut;
+			assert::is_equal(expected, *sut);
 		}
 
 		#pragma endregion
@@ -141,16 +161,7 @@ namespace simply { namespace utility
 
 		#pragma region operator=(const iterator&)
 
-		TEST_METHOD(copy_assignment_operator_throws_invalid_argument_when_source_position_is_in_range)
-		{
-			iterator<int> source { create_enumerable<int>({ 41, 42 }), iterator_position::before_first };
-			++source;
-			iterator<int> target { create_enumerable<int>({}), iterator_position::after_last };
-			auto e = assert::throws<invalid_argument>([&] { target = source; });
-			assert::find("position must not be in_range", e->what());
-		}
-
-		TEST_METHOD(copy_assignment_operator_sets_position_to_value_from_source)
+		TEST_METHOD(copy_assignment_operator_copies_position_from_source)
 		{
 			const auto expected = iterator_position::after_last;
 			iterator<int> source { create_enumerable<int>({}), expected };
@@ -159,12 +170,33 @@ namespace simply { namespace utility
 			assert::is_true(expected == target.position()); // TODO: define << for position
 		}
 
-		TEST_METHOD(copy_assignment_operator_sets_enumerable_from_source)
+		TEST_METHOD(copy_assignment_operator_copies_enumerable_from_source)
 		{
-			const int expected = 42;
+			const int expected { 42 };
 			iterator<int> source { create_enumerable<int>({ expected }), iterator_position::before_first };
 			iterator<int> target { create_enumerable<int>({}), iterator_position::before_first };;
 			target = source;
+			assert::is_equal(expected, *target);
+		}
+
+		TEST_METHOD(copy_assignment_operator_copies_current_element_from_source)
+		{
+			const int expected { 42 };
+			iterator<int> source { create_enumerable<int>({ expected -1, expected }), iterator_position::before_first };
+			++source;
+			iterator<int> target { create_enumerable<int>({}), iterator_position::before_first };
+			target = source;
+			assert::is_equal(expected, *target);
+		}
+
+		TEST_METHOD(copy_assignment_operator_copies_enumerator_from_source)
+		{
+			const int expected { 42 };
+			iterator<int> source { create_enumerable<int>({ expected - 1, expected }), iterator_position::before_first };
+			*source;
+			iterator<int> target { create_enumerable<int>({}), iterator_position::before_first };
+			target = source;
+			++target;
 			assert::is_equal(expected, *target);
 		}
 
@@ -212,14 +244,14 @@ namespace simply { namespace utility
 		{
 			iterator<int> sut { create_enumerable<int>({}), iterator_position::after_last };
 			auto e = assert::throws<logic_error>([&] { *sut; });
-			assert::find("range iterator is not dereferencable", e->what());
+			assert::find("iterator cannot be dereferenced when it points after last enumerable element", e->what());
 		}
 
 		TEST_METHOD(dereferencing_operator_throws_logic_error_when_enumerable_is_empty)
 		{
 			iterator<int> sut { create_enumerable<int>({}), iterator_position::before_first };
 			auto e = assert::throws<logic_error>([&] { *sut; });
-			assert::find("range iterator is not dereferencable", e->what());
+			assert::find("iterator cannot be dereferenced when it points after last enumerable element", e->what());
 		}
 
 		TEST_METHOD(dereferencing_operator_throws_logic_error_when_invoked_after_last_element)
@@ -227,7 +259,7 @@ namespace simply { namespace utility
 			iterator<int> sut { create_enumerable<int>({ 42 }), iterator_position::before_first };
 			++sut;
 			auto e = assert::throws<logic_error>([&] { *sut; });
-			assert::find("range iterator is not dereferencable", e->what());
+			assert::find("iterator cannot be dereferenced when it points after last enumerable element", e->what());
 		}
 
 		TEST_METHOD(dereferencing_operator_creates_enumerator_and_gets_next_value_when_called_first_time)
@@ -265,14 +297,14 @@ namespace simply { namespace utility
 		{
 			iterator<int> sut { create_enumerable<int>({}), iterator_position::after_last };
 			auto e = assert::throws<logic_error>([&] { ++sut; });
-			assert::find("range iterator is not incrementable", e->what());
+			assert::find("iterator cannot be incremented when it points after last enumerable element", e->what());
 		}
 
 		TEST_METHOD(increment_operator_throws_logic_error_when_enumerable_is_empty)
 		{
 			iterator<int> sut { create_enumerable<int>({}), iterator_position::before_first };
 			auto e = assert::throws<logic_error>([&] { ++sut; });
-			assert::find("range iterator is not incrementable", e->what());
+			assert::find("iterator cannot be incremented when it points after last enumerable element", e->what());
 		}
 
 		TEST_METHOD(increment_operator_throws_logic_error_when_invoked_after_last_element)
@@ -280,7 +312,7 @@ namespace simply { namespace utility
 			iterator<int> sut { create_enumerable<int>({ 42 }), iterator_position::before_first };
 			++sut;
 			auto e = assert::throws<logic_error>([&] { ++sut; });
-			assert::find("range iterator is not incrementable", e->what());
+			assert::find("iterator cannot be incremented when it points after last enumerable element", e->what());
 		}
 
 		TEST_METHOD(increment_operator_gets_first_element_before_getting_next)
@@ -312,6 +344,34 @@ namespace simply { namespace utility
 			tracker::destruction_count = 0;
 			++sut; // 2 * get_next 
 			assert::is_equal(1, tracker::destruction_count);
+		}
+
+		TEST_METHOD(increment_operator_throws_logic_error_when_iterator_was_constructor_copied_from_previously_incremented_iterator_to_avoid_calling_get_next_of_enumerator_after_last_element)
+		{
+			iterator<int> source { create_enumerable({ 40, 41, 42 }), iterator_position::before_first };
+			++source; // enumerator.get_next(41)
+			iterator<int> sut { source }; // both sut and source now share the same enumerator
+			auto e = assert::throws<logic_error>([&] { ++sut; }); // attempt to enumerator.get_next(42)
+			assert::find("Incrementing iterator copied from previously incremented iterator is not supported.", e->what());
+		}
+
+		TEST_METHOD(increment_operator_throws_logic_error_when_iterator_was_assignment_copied_from_previously_incremented_iterator_to_avoid_calling_get_next_of_enumerator_after_last_element)
+		{
+			iterator<int> source { create_enumerable({ 40, 41, 42 }), iterator_position::before_first };
+			++source; // enumerator.get_next(41)
+			iterator<int> sut { create_enumerable<int>(), iterator_position::before_first };
+			sut = source; // both sut and source now share the same enumerator
+			auto e = assert::throws<logic_error>([&] { ++sut; }); // attempt to enumerator.get_next(42)
+			assert::find("Incrementing iterator copied from previously incremented iterator is not supported.", e->what());
+		}
+
+		TEST_METHOD(increment_operator_throws_logic_error_when_constructor_copy_was_already_incremented_to_avoid_calling_get_next_of_enumerator_after_last_element)
+		{
+			iterator<int> sut { create_enumerable({ 41, 42 }), iterator_position::before_first };
+			iterator<int> target { sut }; // both sut and source now share the same enumerator
+			++target; // enumerator.get_next(42)
+			auto e = assert::throws<logic_error>([&] { ++sut; }); // attempt to enumerator.get_next(41)
+			assert::find("Incrementing iterator copied from previously incremented iterator is not supported.", e->what());
 		}
 
 		#pragma endregion
