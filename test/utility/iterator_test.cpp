@@ -83,13 +83,6 @@ namespace simply { namespace utility
 			assert::find("position must not be in_range", e->what());
 		}
 
-		TEST_METHOD(constructor_sets_position_to_given_value)
-		{
-			auto expected_value = iterator_position::after_last;
-			iterator<int> sut { create_enumerable<int>({}), expected_value };
-			assert::is_true(expected_value == sut.position()); // TODO: define << for position enum
-		}
-
 		TEST_METHOD(constructor_doesnt_construct_current_element)
 		{
 			tracker::construction_count = 0;
@@ -100,13 +93,6 @@ namespace simply { namespace utility
 		#pragma endregion
 
 		#pragma region iterator(const iterator&)
-
-		TEST_METHOD(copy_constructor_copies_position_from_source)
-		{
-			iterator<int> source { create_enumerable<int>({}), iterator_position::after_last };
-			iterator<int> sut { source };
-			assert::is_true(source.position() == sut.position()); // TODO: define << for position
-		}
 
 		TEST_METHOD(copy_constructor_copies_enumerable_from_source)
 		{
@@ -160,15 +146,6 @@ namespace simply { namespace utility
 		#pragma endregion
 
 		#pragma region operator=(const iterator&)
-
-		TEST_METHOD(copy_assignment_operator_copies_position_from_source)
-		{
-			const auto expected = iterator_position::after_last;
-			iterator<int> source { create_enumerable<int>({}), expected };
-			iterator<int> target { create_enumerable<int>({}), iterator_position::before_first };
-			target = source;
-			assert::is_true(expected == target.position()); // TODO: define << for position
-		}
 
 		TEST_METHOD(copy_assignment_operator_copies_enumerable_from_source)
 		{

@@ -28,7 +28,6 @@ namespace simply { namespace utility
         {
 			range<int> sut { create_enumerable({ 42 }) };
 			iterator<int> result { sut.begin() };
-			assert::is_true(iterator_position::before_first == result.position()); // TODO: define << for position
 			assert::is_equal(42, *result);
         }
 

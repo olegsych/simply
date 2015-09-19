@@ -28,11 +28,6 @@ namespace simply { namespace utility
 		{
 		}
 
-		iterator_position position() const // TODO: Remove this
-		{
-			return pimpl->position;
-		}
-
 		iterator& operator=(const iterator& source)
 		{
 			pimpl = source.pimpl;
