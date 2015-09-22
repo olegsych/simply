@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include <CppUnitTest.h>
+#include <simply/utility/type_name.h>
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
