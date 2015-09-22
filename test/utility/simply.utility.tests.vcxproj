@@ -156,12 +156,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="stub_enumerable.h" />
-    <ClInclude Include="stub_enumerator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="iterator_test.cpp" />
-    <ClCompile Include="range_test.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
